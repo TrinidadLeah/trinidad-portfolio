@@ -9,11 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "off-white": "#F5F2EC",
+        "purple-bruised": "#6B3FA0",
+        "green-static": "#00FF94",
+        "near-black": "#0A0A0F",
+      },
+      fontFamily: {
+        syne: ["var(--font-syne)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
+      transitionDuration: {
+        "400": "400ms",
       },
     },
   },
   plugins: [],
 };
+
 export default config;
