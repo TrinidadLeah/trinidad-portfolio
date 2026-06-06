@@ -112,7 +112,7 @@ export default function Hero() {
           >
             Trinidad
             <br />
-            <span style={{ color: "#8B5CF6" }}>Sturley</span>
+            <span style={{ color: "#8B5CF6" }}>Araujo</span>
           </h1>
 
           {/* Tagline */}
@@ -140,7 +140,7 @@ export default function Hero() {
             className="font-mono text-xs tracking-wider text-right"
             style={{ color: "#F5F2EC", opacity: 0.25 }}
           >
-            AVAILABLE FOR WORK
+            Currently at Siemens
             <br />
             <span style={{ color: "#00FF94", opacity: 0.9 }}>&#x25CF;</span>
             &nbsp;Q2 2026
