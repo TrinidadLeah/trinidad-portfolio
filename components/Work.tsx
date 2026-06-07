@@ -69,14 +69,14 @@ export default function Work() {
             >
               {/* Full-bleed video — no padding, flush to card edges */}
               {study.videoSrc && (
-                <div className="w-full overflow-hidden" style={{ maxHeight: "520px" }}>
+                <div className="w-full overflow-hidden" style={{ height: "100vh" }}>
                   <video
                     src={study.videoSrc}
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="w-full h-auto block"
+                    className="w-full h-full block"
                     style={{ objectFit: "cover" }}
                   />
                 </div>

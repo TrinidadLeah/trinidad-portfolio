@@ -3,16 +3,33 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-const MistShader = dynamic(() => import("./MistShader"), {
+const WireMesh = dynamic(() => import("./WireMesh"), {
   ssr: false,
   loading: () => null,
 });
+
+const NAV = [
+  {
+    label: "Work",
+    href: "#work",
+    style: { top: "44%", left: "6%" },
+  },
+  {
+    label: "About",
+    href: "#about",
+    style: { top: "28%", right: "7%" },
+  },
+  {
+    label: "Contact",
+    href: "#contact",
+    style: { bottom: "17%", left: "41%" },
+  },
+] as const;
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Slight delay so text "eases in like it's being remembered"
     const t = setTimeout(() => setMounted(true), 120);
     return () => clearTimeout(t);
   }, []);
@@ -20,139 +37,83 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col overflow-hidden"
+      className="relative min-h-screen overflow-hidden"
       style={{ backgroundColor: "#0A0A0F" }}
     >
+      {/* ── Wire mesh ── */}
+      <div className="absolute inset-0 z-0">
+        <WireMesh />
+      </div>
+
       {/* ── Scanline overlay ── */}
       <div
         className="absolute inset-0 pointer-events-none z-10"
         aria-hidden="true"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(245,242,236,0.018) 0px, rgba(245,242,236,0.018) 1px, transparent 1px, transparent 4px)",
-        }}
-      />
-
-      {/* ── Mist shader ── */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <MistShader />
-      </div>
-
-      {/* ── Dawn light — off-white trying to bleed through ── */}
-      <div
-        className="absolute inset-0 pointer-events-none z-10"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 55% at 38% 42%, rgba(245,242,236,0.055) 0%, rgba(245,242,236,0.018) 45%, transparent 75%)",
+            "repeating-linear-gradient(0deg, rgba(245,242,236,0.015) 0px, rgba(245,242,236,0.015) 1px, transparent 1px, transparent 4px)",
         }}
       />
 
       {/* ── Content ── */}
-      <div className="relative z-20 flex flex-col justify-between min-h-screen px-8 py-8 md:px-16 md:py-12">
-
-        {/* Top bar */}
-        <div className="flex justify-between items-start">
-          <span
-            className="font-mono text-xs tracking-widest"
-            style={{ color: "#00FF94", opacity: 0.65 }}
-          >
-            PORTFOLIO — 2025
-          </span>
-          <nav aria-label="Section navigation">
-            <ul className="flex gap-8 list-none">
-              {["work", "about", "contact"].map((link) => (
-                <li key={link}>
-                  <a
-                    href={`#${link}`}
-                    className="font-mono text-xs tracking-widest transition-colors duration-400"
-                    style={{ color: "#F5F2EC", opacity: 0.35 }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.color = "#00FF94")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.color = "#F5F2EC")
-                    }
-                  >
-                    {link.toUpperCase()}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-
-        {/* Main title block — eases in */}
-        <div
-          className="max-w-5xl"
+      <div
+        className="absolute inset-0 z-20"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transition: "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
+        {/* Name — top left */}
+        <p
+          className="absolute font-mono tracking-widest"
           style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(1.2rem)",
-            transition:
-              "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)",
+            top: "1.75rem",
+            left: "2rem",
+            color: "#F5F2EC",
+            fontSize: "0.7rem",
+            opacity: 0.85,
+            letterSpacing: "0.18em",
           }}
         >
-          {/* Label */}
-          <div className="mb-5 flex items-center gap-3">
-            <span
-              className="font-mono text-xs tracking-widest"
-              style={{ color: "#00FF94", opacity: 0.7 }}
-            >
-              &#x25A0;&nbsp;DESIGNER.AI_SYSTEMS
-            </span>
-          </div>
+          TRINIDAD ARAUJO
+        </p>
 
-          {/* Name */}
-          <h1
-            className="font-syne font-extrabold leading-none tracking-tight mb-8"
+        {/* Scattered nav anchors */}
+        {NAV.map(({ label, href, style }) => (
+          <a
+            key={href}
+            href={href}
+            className="absolute font-syne font-bold uppercase leading-none select-none"
             style={{
-              fontSize: "clamp(3.8rem, 11vw, 9.5rem)",
+              ...style,
+              fontSize: "clamp(3.2rem, 7.5vw, 6.5rem)",
               color: "#F5F2EC",
+              letterSpacing: "-0.02em",
+              transition: "opacity 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+              opacity: 0.9,
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.35")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.9")}
           >
-            Trinidad
-            <br />
-            <span style={{ color: "#8B5CF6" }}>Araujo</span>
-          </h1>
+            {label}
+          </a>
+        ))}
 
-          {/* Tagline */}
-          <p
-            className="font-mono text-sm md:text-base leading-relaxed max-w-lg"
-            style={{ color: "#F5F2EC", opacity: 0.45 }}
-          >
-            Senior Product Designer.
-            <br />
-            AI orchestration + agent experience.
-            <br />
-            Making the uncanny feel intentional.
-          </p>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="flex justify-between items-end">
-          <span
-            className="font-mono text-xs tracking-widest"
-            style={{ color: "#F5F2EC", opacity: 0.22 }}
-          >
-            SCROLL &#x2193;
+        {/* Bottom bio strip */}
+        <div
+          className="absolute bottom-0 left-0 right-0 flex flex-wrap items-center gap-x-5 gap-y-1 px-8 py-4 font-mono text-xs tracking-wide"
+          style={{
+            borderTop: "1px solid rgba(245,242,236,0.07)",
+            color: "#F5F2EC",
+          }}
+        >
+          <span style={{ opacity: 0.75 }}>Senior Product Designer @ Siemens</span>
+          <span style={{ opacity: 0.2 }}>|</span>
+          <span style={{ opacity: 0.3 }}>
+            Previously @ Supplyframe &nbsp;·&nbsp; Thomson Reuters &nbsp;·&nbsp; Walmart Global Tech
           </span>
-          <div
-            className="font-mono text-xs tracking-wider text-right"
-            style={{ color: "#F5F2EC", opacity: 0.25 }}
-          >
-            Currently at Siemens
-            <br />
-            <span style={{ color: "#00FF94", opacity: 0.9 }}>&#x25CF;</span>
-            &nbsp;Q2 2026
-          </div>
         </div>
       </div>
-
-      {/* ── Bottom rule ── */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px z-20"
-        style={{ backgroundColor: "rgba(107,63,160,0.4)" }}
-      />
     </section>
   );
 }
