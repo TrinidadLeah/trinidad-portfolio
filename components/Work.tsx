@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { caseStudies } from "@/lib/case-studies";
 
 export default function Work() {
@@ -60,12 +61,13 @@ export default function Work() {
         {/* Cards — single column, full width */}
         <div className="flex flex-col gap-3">
           {caseStudies.map((study) => (
-            <article
+            <Link
               key={study.id}
-              className="work-card cursor-pointer"
-              tabIndex={0}
+              href={`/case-studies/${study.slug}`}
+              className="block work-card"
               aria-label={`${study.title} — ${study.category}`}
             >
+            <article>
               {/* Full-bleed video */}
               {study.videoSrc && (
                 <div className="w-full overflow-hidden" style={{ height: "100vh" }}>
@@ -122,6 +124,7 @@ export default function Work() {
                 </div>
               </div>
             </article>
+            </Link>
           ))}
         </div>
       </section>
