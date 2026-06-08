@@ -40,7 +40,7 @@ export default function Hero() {
       className="relative min-h-screen overflow-hidden"
       style={{ backgroundColor: "#0A0A0F" }}
     >
-      {/* ── Wire mesh ── */}
+      {/* ── Galaxy background ── */}
       <div className="absolute inset-0 z-0">
         <WireMesh />
       </div>
@@ -51,7 +51,7 @@ export default function Hero() {
         aria-hidden="true"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(245,242,236,0.015) 0px, rgba(245,242,236,0.015) 1px, transparent 1px, transparent 4px)",
+            "repeating-linear-gradient(0deg, rgba(0,255,148,0.008) 0px, rgba(0,255,148,0.008) 1px, transparent 1px, transparent 4px)",
         }}
       />
 
@@ -65,14 +65,13 @@ export default function Hero() {
       >
         {/* Name — top left */}
         <p
-          className="absolute font-mono tracking-widest"
+          className="absolute font-mono font-bold tracking-widest"
           style={{
-            top: "1.75rem",
+            top: "1.5rem",
             left: "2rem",
             color: "#F5F2EC",
-            fontSize: "0.7rem",
-            opacity: 0.85,
-            letterSpacing: "0.18em",
+            fontSize: "1.25rem",
+            letterSpacing: "0.14em",
           }}
         >
           TRINIDAD ARAUJO
@@ -89,11 +88,17 @@ export default function Hero() {
               fontSize: "clamp(3.2rem, 7.5vw, 6.5rem)",
               color: "#F5F2EC",
               letterSpacing: "-0.02em",
-              transition: "opacity 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+              transition: "color 300ms ease, opacity 300ms ease",
               opacity: 0.9,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.35")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.9")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#00FF94";
+              e.currentTarget.style.opacity = "1";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "#F5F2EC";
+              e.currentTarget.style.opacity = "0.9";
+            }}
           >
             {label}
           </a>
@@ -101,15 +106,19 @@ export default function Hero() {
 
         {/* Bottom bio strip */}
         <div
-          className="absolute bottom-0 left-0 right-0 flex flex-wrap items-center gap-x-5 gap-y-1 px-8 py-4 font-mono text-xs tracking-wide"
+          className="absolute bottom-0 left-0 right-0 flex flex-wrap items-center gap-x-5 gap-y-1 px-8 py-5 font-mono text-xs tracking-wide"
           style={{
-            borderTop: "1px solid rgba(245,242,236,0.07)",
-            color: "#F5F2EC",
+            borderTop: "1px solid rgba(0,255,148,0.18)",
+            backgroundColor: "rgba(10,10,15,0.5)",
           }}
         >
-          <span style={{ opacity: 0.75 }}>Senior Product Designer @ Siemens</span>
-          <span style={{ opacity: 0.2 }}>|</span>
-          <span style={{ opacity: 0.3 }}>
+          {/* ─ green dot indicator */}
+          <span style={{ color: "#00FF94", fontSize: "0.55rem" }}>◆</span>
+          <span style={{ color: "#00FF94", letterSpacing: "0.12em" }}>
+            Senior Product Designer @ Siemens
+          </span>
+          <span style={{ color: "rgba(245,242,236,0.15)" }}>|</span>
+          <span style={{ color: "rgba(245,242,236,0.3)", letterSpacing: "0.08em" }}>
             Previously @ Supplyframe &nbsp;·&nbsp; Thomson Reuters &nbsp;·&nbsp; Walmart Global Tech
           </span>
         </div>

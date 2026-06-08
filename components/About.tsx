@@ -11,24 +11,23 @@ export default function About() {
         <div>
           {/* Section header */}
           <div
-            className="flex justify-between items-baseline mb-16 pb-4 border-b"
-            style={{ borderColor: "rgba(245,242,236,0.08)" }}
+            className="flex justify-between items-baseline mb-16 pb-4"
+            style={{ borderBottom: "1px solid rgba(0,255,148,0.12)" }}
           >
             <h2
               className="font-mono text-xs tracking-widest uppercase"
-              style={{ color: "#F5F2EC", opacity: 0.25 }}
+              style={{ color: "#00FF94", opacity: 0.55 }}
             >
-              About
+              ◆&nbsp;&nbsp;About
             </h2>
           </div>
 
           {/* Lead statement */}
           <p
-            className="font-syne font-medium leading-relaxed mb-16"
+            className="font-syne font-bold leading-tight mb-16"
             style={{
-              fontSize: "clamp(1.35rem, 3vw, 2rem)",
+              fontSize: "clamp(1.5rem, 3.2vw, 2.25rem)",
               color: "#F5F2EC",
-              opacity: 0.88,
             }}
           >
             I design interfaces for systems that are still
@@ -39,14 +38,14 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-4">
             <div>
               <h3
-                className="font-mono text-xs tracking-widest mb-5"
-                style={{ color: "#00FF94", opacity: 0.65 }}
+                className="font-mono text-xs tracking-widest mb-5 uppercase"
+                style={{ color: "#00FF94" }}
               >
-                APPROACH
+                Approach
               </h3>
               <p
                 className="font-mono text-sm leading-loose"
-                style={{ color: "#F5F2EC", opacity: 0.38 }}
+                style={{ color: "rgba(245,242,236,0.4)" }}
               >
                 Good AI product design means making uncertainty a first-class
                 citizen. Designing not just for states, but for the spaces between
@@ -57,14 +56,14 @@ export default function About() {
 
             <div>
               <h3
-                className="font-mono text-xs tracking-widest mb-5"
-                style={{ color: "#00FF94", opacity: 0.65 }}
+                className="font-mono text-xs tracking-widest mb-5 uppercase"
+                style={{ color: "#00FF94" }}
               >
-                BACKGROUND
+                Background
               </h3>
               <p
                 className="font-mono text-sm leading-loose"
-                style={{ color: "#F5F2EC", opacity: 0.38 }}
+                style={{ color: "rgba(245,242,236,0.4)" }}
               >
                 10 years in product. Led design at [Studio], [Company]. Currently
                 consulting on agent experience for early-stage AI teams who need
@@ -75,8 +74,8 @@ export default function About() {
 
           {/* Skill strip */}
           <div
-            className="mt-20 pt-8 border-t flex flex-wrap gap-6 md:gap-10"
-            style={{ borderColor: "rgba(245,242,236,0.06)" }}
+            className="mt-20 pt-8 flex flex-wrap gap-4"
+            style={{ borderTop: "1px solid rgba(0,255,148,0.1)" }}
           >
             {[
               "Agent Experience",
@@ -87,27 +86,24 @@ export default function About() {
             ].map((skill) => (
               <span
                 key={skill}
-                className="font-mono text-xs tracking-wider"
-                style={{ color: "#F5F2EC", opacity: 0.18 }}
+                className="font-mono text-xs tracking-wider px-3 py-1"
+                style={{
+                  color: "rgba(0,255,148,0.45)",
+                  border: "1px solid rgba(0,255,148,0.15)",
+                }}
               >
                 {skill}
               </span>
             ))}
           </div>
-
-          {/* Bottom rule */}
-          <div
-            className="mt-16 h-px w-full"
-            style={{ backgroundColor: "rgba(107,63,160,0.25)" }}
-          />
         </div>
 
         {/* ── Right: photo ── */}
         <div className="relative w-full hidden md:block" style={{ top: "3.5rem" }}>
-          {/* Thin purple top accent line */}
+          {/* Green top accent line */}
           <div
             className="w-full h-px mb-0"
-            style={{ backgroundColor: "rgba(139,92,246,0.5)" }}
+            style={{ backgroundColor: "rgba(0,255,148,0.35)" }}
           />
           <div className="relative w-full overflow-hidden" style={{ aspectRatio: "3/4" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -115,26 +111,26 @@ export default function About() {
               src="/about_photo.JPG"
               alt="Trinidad Araujo"
               className="w-full h-full object-cover object-top"
-              style={{ filter: "grayscale(12%) contrast(1.04)" }}
+              style={{ filter: "grayscale(30%) contrast(1.1)" }}
             />
-            {/* Subtle dark gradient at bottom to blend into section bg */}
+            {/* Dark gradient at bottom */}
             <div
               className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
               style={{
                 background:
-                  "linear-gradient(to bottom, transparent 0%, rgba(10,10,15,0.65) 100%)",
+                  "linear-gradient(to bottom, transparent 0%, rgba(10,10,15,0.8) 100%)",
               }}
             />
           </div>
-          {/* Thin purple bottom accent line */}
+          {/* Green bottom accent line */}
           <div
             className="w-full h-px"
-            style={{ backgroundColor: "rgba(139,92,246,0.2)" }}
+            style={{ backgroundColor: "rgba(0,255,148,0.12)" }}
           />
           {/* Caption */}
           <p
             className="font-mono text-xs mt-3 tracking-widest"
-            style={{ color: "#F5F2EC", opacity: 0.18 }}
+            style={{ color: "rgba(0,255,148,0.3)" }}
           >
             TRINIDAD ARAUJO — SF / REMOTE
           </p>
