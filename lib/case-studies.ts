@@ -18,6 +18,7 @@ export type CaseStudy = {
   status: "CASE STUDY" | "RESEARCH" | "COMING SOON";
   results: CaseStudyResult[];
   videoSrc?: string;
+  imageSrc?: string;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -46,5 +47,22 @@ export const caseStudies: CaseStudy[] = [
       { stat: "0", label: "training sessions required for adoption" },
     ],
     videoSrc: "/Riskindexvid.mp4",
+  },
+  {
+    id: "02",
+    slug: "agents",
+    title: "Agents",
+    subtitle: "Orchestration UX for AI agents",
+    category: "AI Orchestration",
+    year: "2025",
+    company: "",
+    description:
+      "Designing how humans direct, monitor, and trust fleets of AI agents. Full case study currently being declassified.",
+    responsibilities: [],
+    timeline: "",
+    tags: ["Agent UX", "AI Orchestration", "Trust & Control"],
+    status: "COMING SOON",
+    results: [],
+    imageSrc: "/agents.png",
   },
 ];
