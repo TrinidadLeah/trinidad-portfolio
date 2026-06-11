@@ -13,25 +13,35 @@ const NAV = [
     label: "Work",
     href: "#work",
     style: { top: "44%", left: "6%" },
+    delay: 140,
   },
   {
     label: "About",
     href: "#about",
     style: { top: "28%", right: "7%" },
+    delay: 220,
   },
   {
     label: "Contact",
     href: "#contact",
     style: { bottom: "17%", left: "41%" },
+    delay: 300,
   },
 ] as const;
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 120);
-    return () => clearTimeout(t);
+    // Clear stagger delays once the entrance has finished so hover
+    // transitions respond instantly.
+    const s = setTimeout(() => setSettled(true), 1200);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(s);
+    };
   }, []);
 
   return (
@@ -40,6 +50,31 @@ export default function Hero() {
       className="relative min-h-screen overflow-hidden"
       style={{ backgroundColor: "#0A0A0F" }}
     >
+      <style>{`
+        .hero-in {
+          opacity: 0;
+          transform: translateY(18px);
+          transition:
+            opacity 600ms var(--ease-enter),
+            transform 600ms var(--ease-enter),
+            color 250ms ease;
+        }
+        .hero-in-down { transform: translateY(-12px); }
+        .hero-mounted .hero-in { opacity: 1; transform: none; }
+
+        .hero-nav { color: #F5F2EC; }
+        .hero-nav:focus-visible { color: #00FF94; outline: none; }
+        @media (hover: hover) and (pointer: fine) {
+          .hero-mounted .hero-nav {
+            transition:
+              color 250ms ease,
+              transform 450ms var(--ease-enter),
+              opacity 450ms var(--ease-enter);
+          }
+          .hero-nav:hover { color: #00FF94; transform: translateX(10px); }
+        }
+      `}</style>
+
       {/* ── Galaxy background ── */}
       <div className="absolute inset-0 z-0">
         <WireMesh />
@@ -56,16 +91,10 @@ export default function Hero() {
       />
 
       {/* ── Content ── */}
-      <div
-        className="absolute inset-0 z-20"
-        style={{
-          opacity: mounted ? 1 : 0,
-          transition: "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      >
+      <div className={`absolute inset-0 z-20 ${mounted ? "hero-mounted" : ""}`}>
         {/* Name — top left */}
         <p
-          className="absolute font-mono font-bold tracking-widest"
+          className="hero-in hero-in-down absolute font-mono font-bold tracking-widest"
           style={{
             top: "1.5rem",
             left: "2rem",
@@ -78,26 +107,16 @@ export default function Hero() {
         </p>
 
         {/* Scattered nav anchors */}
-        {NAV.map(({ label, href, style }) => (
+        {NAV.map(({ label, href, style, delay }) => (
           <a
             key={href}
             href={href}
-            className="absolute font-syne font-bold uppercase leading-none select-none"
+            className="hero-in hero-nav absolute font-syne font-bold uppercase leading-none select-none"
             style={{
               ...style,
               fontSize: "clamp(3.2rem, 7.5vw, 6.5rem)",
-              color: "#F5F2EC",
               letterSpacing: "-0.02em",
-              transition: "color 300ms ease, opacity 300ms ease",
-              opacity: 0.9,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#00FF94";
-              e.currentTarget.style.opacity = "1";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#F5F2EC";
-              e.currentTarget.style.opacity = "0.9";
+              transitionDelay: settled ? "0ms" : `${delay}ms`,
             }}
           >
             {label}
@@ -106,14 +125,14 @@ export default function Hero() {
 
         {/* Bottom bio strip */}
         <div
-          className="absolute bottom-0 left-0 right-0 flex flex-wrap items-center gap-x-5 gap-y-1 px-8 py-5 font-mono text-xs tracking-wide"
+          className="hero-in absolute bottom-0 left-0 right-0 flex flex-wrap items-center gap-x-5 gap-y-1 px-8 py-5 font-mono text-xs tracking-wide"
           style={{
             borderTop: "1px solid rgba(0,255,148,0.18)",
             backgroundColor: "rgba(10,10,15,0.5)",
+            transitionDelay: settled ? "0ms" : "420ms",
           }}
         >
-          {/* ─ green dot indicator */}
-          <span style={{ color: "#00FF94", fontSize: "0.55rem" }}>◆</span>
+          <span className="pulse-soft" style={{ color: "#00FF94", fontSize: "0.55rem" }}>◆</span>
           <span style={{ color: "#00FF94", letterSpacing: "0.12em" }}>
             Senior Product Designer @ Siemens
           </span>

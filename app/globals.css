@@ -7,6 +7,84 @@
   --purple-bruised: #6B3FA0;
   --green-static: #00FF94;
   --near-black: #0A0A0F;
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-move: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ─── Scroll reveal ─── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 600ms var(--ease-enter),
+    transform 600ms var(--ease-enter);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── Soft pulse (status dots, markers) ─── */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+.pulse-soft {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+
+/* ─── About: skill pills ─── */
+.about-skill {
+  color: rgba(0, 255, 148, 0.45);
+  border: 1px solid rgba(0, 255, 148, 0.15);
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    transform 200ms var(--ease-enter);
+}
+@media (hover: hover) and (pointer: fine) {
+  .about-skill:hover {
+    color: var(--green-static);
+    border-color: rgba(0, 255, 148, 0.5);
+    transform: translateY(-2px);
+  }
+}
+
+/* ─── Contact: email link underline sweep ─── */
+.contact-email {
+  position: relative;
+  display: inline-block;
+  color: var(--off-white);
+  text-decoration: none;
+  transition:
+    color 300ms ease,
+    transform 160ms var(--ease-enter);
+}
+.contact-email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.08em;
+  width: 100%;
+  height: 0.06em;
+  background-color: var(--green-static);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 350ms var(--ease-move);
+}
+.contact-email:focus-visible {
+  color: var(--green-static);
+  outline: none;
+}
+.contact-email:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .contact-email:hover { color: var(--green-static); }
+  .contact-email:hover::after { transform: scaleX(1); }
+}
+.contact-email:active {
+  transform: scale(0.985);
 }
 
 *,
@@ -69,10 +147,15 @@ button,
 
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
   }
 }

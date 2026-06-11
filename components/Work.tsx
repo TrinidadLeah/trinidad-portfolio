@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Reveal from "./Reveal";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 
 function CardMedia({ study }: { study: CaseStudy }) {
@@ -113,6 +114,9 @@ export default function Work() {
           border-top-color: #00FF94;
           transform: rotate(-0.4deg);
         }
+        a.work-card:active {
+          transform: rotate(-0.4deg) scale(0.99);
+        }
         .work-card .card-category { color: rgba(0,255,148,0.6); transition: color 350ms ease; }
         .work-card .card-title    { color: #F5F2EC; }
         .work-card .card-desc     { color: rgba(245,242,236,0.4); }
@@ -144,7 +148,8 @@ export default function Work() {
           transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         a.work-card:hover .card-ticker { transform: translateY(0); }
-        .card-ticker-track { animation: ticker-scroll 12s linear infinite; }
+        /* Marquee only runs while hovered — no off-screen GPU burn */
+        a.work-card:hover .card-ticker-track { animation: ticker-scroll 12s linear infinite; }
         @keyframes ticker-scroll {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
@@ -165,45 +170,47 @@ export default function Work() {
 
       <section id="work" style={{ backgroundColor: "#0A0A0F" }} className="py-24 px-8 md:px-16">
         {/* Section header */}
-        <div
-          className="flex justify-between items-baseline mb-16 pb-4"
-          style={{ borderBottom: "1px solid rgba(0,255,148,0.12)" }}
-        >
-          <h2
-            className="font-mono text-xs tracking-widest uppercase"
-            style={{ color: "#00FF94", opacity: 0.55 }}
+        <Reveal>
+          <div
+            className="flex justify-between items-baseline mb-16 pb-4"
+            style={{ borderBottom: "1px solid rgba(0,255,148,0.12)" }}
           >
-            ◆&nbsp;&nbsp;Selected Work
-          </h2>
-          <span className="font-mono text-xs tracking-widest" style={{ color: "rgba(245,242,236,0.2)" }}>
-            {String(caseStudies.length).padStart(2, "0")} PROJECTS &mdash; MORE INBOUND
-          </span>
-        </div>
+            <h2
+              className="font-mono text-xs tracking-widest uppercase"
+              style={{ color: "#00FF94", opacity: 0.55 }}
+            >
+              ◆&nbsp;&nbsp;Selected Work
+            </h2>
+            <span className="font-mono text-xs tracking-widest" style={{ color: "rgba(245,242,236,0.2)" }}>
+              {String(caseStudies.length).padStart(2, "0")} PROJECTS &mdash; MORE INBOUND
+            </span>
+          </div>
+        </Reveal>
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {caseStudies.map((study) =>
-            study.status === "COMING SOON" ? (
-              <article
-                key={study.id}
-                className="work-card coming-soon flex flex-col"
-                aria-label={`${study.title} — coming soon`}
-              >
-                <CardMedia study={study} />
-                <CardBody study={study} />
-              </article>
-            ) : (
-              <Link
-                key={study.id}
-                href={`/case-studies/${study.slug}`}
-                className="work-card flex flex-col"
-                aria-label={`${study.title} — ${study.category}`}
-              >
-                <CardMedia study={study} />
-                <CardBody study={study} />
-              </Link>
-            )
-          )}
+          {caseStudies.map((study, i) => (
+            <Reveal key={study.id} delay={i * 80}>
+              {study.status === "COMING SOON" ? (
+                <article
+                  className="work-card coming-soon flex flex-col h-full"
+                  aria-label={`${study.title} — coming soon`}
+                >
+                  <CardMedia study={study} />
+                  <CardBody study={study} />
+                </article>
+              ) : (
+                <Link
+                  href={`/case-studies/${study.slug}`}
+                  className="work-card flex flex-col h-full"
+                  aria-label={`${study.title} — ${study.category}`}
+                >
+                  <CardMedia study={study} />
+                  <CardBody study={study} />
+                </Link>
+              )}
+            </Reveal>
+          ))}
         </div>
       </section>
     </>
